@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    private GameController _gameController;
     private Rigidbody2D playerRb;
     private Animator playerAnimator;
     public Transform groundCheck;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
+        _gameController = FindObjectOfType(typeof(GameController)) as GameController;
         _extraJumps = extraJumps;
     }
 
@@ -116,14 +118,22 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Shoot(){
-        if(!isShootig && Input.GetButtonDown("Fire1")){
+        if(!isShootig && Input.GetButtonDown("Fire1") && _gameController.getAmmo() > 0){
             isShootig = true;
+            _gameController.changeAmmo(-1);
             GameObject temp = Instantiate(carrotPrefab);
             temp.transform.position = gunPosition.position;
             //temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootSpeed, 0));
             temp.GetComponent<Rigidbody2D>().velocity = new Vector2(shootSpeed, 0);
             Destroy(temp, 1.5f);
             isShootig = false;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider) {
+        if(collider.CompareTag("Collectable")){
+            Destroy(collider.gameObject);
+            _gameController.changeAmmo(1);
         }
     }
 
