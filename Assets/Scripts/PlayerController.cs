@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public GameObject carrotPrefab;
     public float shootSpeed;
     private bool isShootig = false;
+    public float shootDelay;
     public Transform gunPosition;
 
     // Start is called before the first frame update
@@ -118,16 +119,21 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Shoot(){
-        if(!isShootig && Input.GetButtonDown("Fire1") && _gameController.getAmmo() > 0){
+        if(!isShootig && Input.GetButton("Fire1") && _gameController.getAmmo() > 0){
             isShootig = true;
             _gameController.changeAmmo(-1);
+            StartCoroutine(shootDelayCoroutine());
             GameObject temp = Instantiate(carrotPrefab);
             temp.transform.position = gunPosition.position;
             //temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootSpeed, 0));
             temp.GetComponent<Rigidbody2D>().velocity = new Vector2(shootSpeed, 0);
             Destroy(temp, 1.5f);
-            isShootig = false;
         }
+    }
+
+    IEnumerator shootDelayCoroutine(){
+        yield return new WaitForSeconds(shootDelay);
+        isShootig = false;
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
