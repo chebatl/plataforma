@@ -6,6 +6,8 @@ public class GameController : MonoBehaviour
 {
     private PlayerController _playerController;
     public float posY;
+    [SerializeField]
+    private int ammo;
 
     // Start is called before the first frame update
     void Start()
@@ -18,5 +20,13 @@ public class GameController : MonoBehaviour
     void Update()
     {
         posY = _playerController.transform.position.y;
+    }
+
+    public void changeAmmo(int quantity){
+        ammo += quantity;
+    }
+
+    public int getAmmo(){
+        return ammo;
     }
 }
