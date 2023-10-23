@@ -137,9 +137,20 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if(collider.CompareTag("Collectable")){
+        if(collider.CompareTag(TagsType.COLLECTABLE.ToString())){
+
+            Collectable collectable = collider.gameObject.GetComponent<Collectable>();
+
+            if(CollectableType.AMMO.ToString().Equals(collectable.collectableName)){
+                _gameController.changeAmmo(collectable.quantity);
+            }
+
+            if(CollectableType.EGG.ToString().Equals(collectable.collectableName)){
+                print("egg");
+            }
+
+
             Destroy(collider.gameObject);
-            _gameController.changeAmmo(1);
         }
     }
 
