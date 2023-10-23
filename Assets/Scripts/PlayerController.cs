@@ -139,7 +139,6 @@ public class PlayerController : MonoBehaviour
             temp.GetComponent<Rigidbody2D>().gravityScale = 2;
             //temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootSpeedX, shootSpeedY));
             temp.GetComponent<Rigidbody2D>().velocity = new Vector2(shootSpeedX - 7, shootSpeedY);
-            Destroy(temp, 2f);
         }
     }
 
