@@ -11,6 +11,8 @@ public class TagsType
     }
     
     public static TagsType COLLECTABLE {get {return new TagsType("Collectable");}}
+    public static TagsType THROWABLE {get {return new TagsType("Throwable");}}
+    public static TagsType GROUND {get {return new TagsType("Ground");}}
 
     
 }

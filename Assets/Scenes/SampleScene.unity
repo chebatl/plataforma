@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 81647638}
   m_Layer: 6
   m_Name: Ground (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 434752214}
   m_Layer: 6
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -989,7 +989,7 @@ GameObject:
   - component: {fileID: 1864520905}
   m_Layer: 6
   m_Name: Ground (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1263,7 +1263,8 @@ MonoBehaviour:
     m_Bits: 64
   extraJumps: 1
   carrotPrefab: {fileID: 9180978557516884220, guid: 9229f5f1dcdcefd459eac08827e2ef11, type: 3}
-  shootSpeed: 12
+  shootSpeedX: 15
+  shootSpeedY: 15
   shootDelay: 0.8
   gunPosition: {fileID: 1677336815}
 --- !u!95 &2027601250
