@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public int extraJumps;
     private int _extraJumps;
     public GameObject carrotPrefab;
-    public float shootSpeed;
+    public float shootSpeedX, shootSpeedY;
     private bool isShootig = false;
     public float shootDelay;
     public Transform gunPosition;
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
         isFacingLeft = !isFacingLeft;
         float x = transform.localScale.x * (-1);
         transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
-        shootSpeed *= -1;
+        shootSpeedX *= -1;
     }
 
     private void Shoot(){
@@ -125,9 +125,21 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(shootDelayCoroutine());
             GameObject temp = Instantiate(carrotPrefab);
             temp.transform.position = gunPosition.position;
-            //temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootSpeed, 0));
-            temp.GetComponent<Rigidbody2D>().velocity = new Vector2(shootSpeed, 0);
+            //temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootSpeedX, 0));
+            temp.GetComponent<Rigidbody2D>().velocity = new Vector2(shootSpeedX, 0);
             Destroy(temp, 1.5f);
+        }
+
+        if(!isShootig && Input.GetButton("Fire2") && _gameController.getAmmo() > 0){
+            isShootig = true;
+            _gameController.changeAmmo(-1);
+            StartCoroutine(shootDelayCoroutine());
+            GameObject temp = Instantiate(carrotPrefab);
+            temp.transform.position = gunPosition.position;
+            temp.GetComponent<Rigidbody2D>().gravityScale = 2;
+            //temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootSpeedX, shootSpeedY));
+            temp.GetComponent<Rigidbody2D>().velocity = new Vector2(shootSpeedX - 7, shootSpeedY);
+            Destroy(temp, 2f);
         }
     }
 
@@ -137,9 +149,20 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if(collider.CompareTag("Collectable")){
+        if(collider.CompareTag(TagsType.COLLECTABLE.ToString())){
+
+            Collectable collectable = collider.gameObject.GetComponent<Collectable>();
+
+            if(CollectableType.AMMO.ToString().Equals(collectable.collectableName)){
+                _gameController.changeAmmo(collectable.quantity);
+            }
+
+            if(CollectableType.EGG.ToString().Equals(collectable.collectableName)){
+                print("egg");
+            }
+
+
             Destroy(collider.gameObject);
-            _gameController.changeAmmo(1);
         }
     }
 
